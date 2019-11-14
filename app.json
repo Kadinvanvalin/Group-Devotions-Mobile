@@ -8,11 +8,14 @@
     "sdkVersion": "35.0.0",
     "version": "1.0.0",
     "entryPoint": "node_modules/expo/AppEntry.js",
+    "orientation": "portrait",
     "platforms": [
       "ios",
       "android",
       "web"
     ],
+    "icon": "./icon.png",
+    "primaryColor": "#00ada7",
     "ios": {
       "bundleIdentifier": "com.kadinvanvalin.groupdevotions"
     },

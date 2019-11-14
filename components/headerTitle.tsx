@@ -1,6 +1,5 @@
-import React, { Component } from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native'
-import GlobalVars from '../GlobalVars';
+import React from 'react';
+import { Text, StyleSheet } from 'react-native'
 
 const LessonTitle = (props) => {
    return (
@@ -16,10 +15,8 @@ const styles = StyleSheet.create ({
      alignItems: 'center',
   },
   text: {
-    // color: '#707070',
-    // padding: 30,
     fontWeight: "bold",
-    fontFamily: GlobalVars.font.family.georgia,
+    fontFamily: "Georgia",
     fontSize: 30,
  }
 })
