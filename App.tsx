@@ -1,14 +1,41 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
 import DevotionScreen from './components/devotion';
-import { createAppContainer } from 'react-navigation';
+import Group from './components/group';
+import LoginScreen from './components/login';
+import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
+import { createBottomTabNavigator } from 'react-navigation-tabs';
+const AuthStack = createStackNavigator({ SignIn: LoginScreen });
 
-const AppNavigator = createStackNavigator({
-  Home: DevotionScreen,
-});
-
-const AppContainer = createAppContainer(AppNavigator);
+const TabNavigator = createBottomTabNavigator({
+  Group: Group,
+  Devotion: DevotionScreen,
+},
+{
+  tabBarOptions: {
+    activeTintColor: 'black',
+    inactiveTintColor: '#00ada7',
+    activeBackgroundColor: '#00ada7',
+    inactiveBackgroundColor: '#E0E0E0',
+    labelStyle: {
+      fontWeight: "bold",
+      fontFamily: "Georgia",
+      fontSize: 30,
+    },
+  },
+}
+);
+const switchNavigator =  createSwitchNavigator(
+  {
+    // AuthLoading: AuthLoadingScreen,
+    App: TabNavigator,
+    Auth: AuthStack,
+  },
+  {
+    initialRouteName: 'Auth',
+  }
+);
+const AppContainer = createAppContainer(switchNavigator);
 
 export default class App extends React.Component {
   render() {
