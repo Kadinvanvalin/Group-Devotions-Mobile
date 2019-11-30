@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
   text: {
     marginLeft: 20,
     marginRight: 20,
-    fontFamily: "Verdana",
+    fontFamily: "sans-serif",
     color: "#404040",
     fontSize: 16,
     fontWeight: "bold"
