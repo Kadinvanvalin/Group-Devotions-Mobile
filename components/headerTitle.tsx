@@ -16,7 +16,7 @@ const styles = StyleSheet.create ({
   },
   text: {
     fontWeight: "bold",
-    fontFamily: "Georgia",
+    fontFamily: "sans-serif",
     fontSize: 30,
  }
 })
