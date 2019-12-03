@@ -6,11 +6,11 @@ import {
   SafeAreaView
 } from "react-native";
 import Scripture from "./scripture";
-import HeaderTitle from "../components/headerTitle";
+import HeaderTitle from "./headerTitle";
 import { NavigationStackOptions } from "react-navigation-stack";
 import { ScrollView } from "react-native-gesture-handler";
 import DevotionHeader from "./devotionHeader";
-import GlobalVars from "../GlobalVars";
+import GlobalVars from "../../GlobalVars";
 import HTMLView from "react-native-htmlview";
 
 class DevotionScreen extends React.Component {
