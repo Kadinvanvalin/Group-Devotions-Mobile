@@ -8,8 +8,6 @@ import {
   ScrollView,
   Button
 } from "react-native";
-// import {AsyncStorage} from 'react-native';
-let CookieManager = require("react-native-cookies")
 
 interface Props {
   navigation: any
@@ -23,24 +21,19 @@ class LoginScreen extends React.Component<Props> {
 
   componentDidMount = async () => {
     try {
-      const cookie = await AsyncStorage.getItem('cookie');
-      if (cookie !== null) {
-        // We have data!!
-        console.log(cookie);
-
+      const body = await AsyncStorage.getItem('password');
+      if (body !== "null") {
         fetch("https://www.groupdevotions.com/rest/account/localLogin", {
           method: "POST",
           headers: {
-            // 'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            'cookie': cookie,
+            'Content-Type': 'application/json'
             },
-            credentials: "omit",
+            body
         })
           .then(response => response.json())
           .then(responseJson => {
-            // {"operationSuccessful":false,"message":{"type":"danger","text":"Unable to find your account."}}
             if(responseJson.operationSuccessful) {
+              console.log("already logged in")
               this.props.navigation.navigate('App');
             } else {
               alert(responseJson.message.text)
@@ -49,6 +42,8 @@ class LoginScreen extends React.Component<Props> {
           .catch(error => {
             console.error(error);
           });
+      } else {
+        console.log("no cookie")
       }
     } catch (error) {
       // Error retrieving data
@@ -63,11 +58,19 @@ class LoginScreen extends React.Component<Props> {
           Login
         </Text>
         <TextInput
+        style={{height: 45,width: "95%",borderColor: "gray",borderWidth: 2, marginBottom: 25}}
         onChangeText={(value) => this.setState({email: value})}
-        placeholder='Email' />
+        placeholder=' Enter Your Email' />
         <TextInput
          onChangeText={(value) => this.setState({password: value})}
-        placeholder='Password' />
+        style={{height: 45,width: "95%",borderColor: "gray",borderWidth: 2}}
+        // Adding hint in TextInput using Placeholder option.
+        placeholder=" Enter Your Password"          
+        // Making the Under line Transparent.
+        underlineColorAndroid="transparent"
+        // Making the Text Input Text Hidden.
+        secureTextEntry={true}
+ />
         <View style={{margin: 7}} />
         <Button 
         onPress={this.onLoginPress}
@@ -87,25 +90,26 @@ class LoginScreen extends React.Component<Props> {
       "password": state.password,
       // "test123",
       "url": "https://www.groupdevotions.com/",
-      "stayLoggedIn": false
+      "stayLoggedIn": true
     }
+    const body = JSON.stringify(opts);
     fetch("https://www.groupdevotions.com/rest/account/localLogin", {
       method: "POST",
       headers: {
         // 'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(opts)
+      body,
     })
-      .then(response => {return {responseJson: response.json(), response} })
+      .then(async response => {return {responseJson: await response.json(), response} })
       .then(async obj => {
         const {responseJson, response} = obj
-        // {"operationSuccessful":false,"message":{"type":"danger","text":"Unable to find your account."}}
         if(responseJson.operationSuccessful) {
-              await AsyncStorage.setItem('cookie', response.headers.get("set-cookie"));
+          // TODO: WARNING We should not save an unhashed password in the final app
+          await AsyncStorage.setItem('password', body);
           this.props.navigation.navigate('App');
         } else {
-          alert(responseJson.message.text)
+          console.log(responseJson)
         }
       })
       .catch(error => {
