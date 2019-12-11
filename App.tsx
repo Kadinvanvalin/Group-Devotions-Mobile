@@ -3,9 +3,9 @@ import DevotionScreen from './src/components/devotion';
 import Group from './src/components/group';
 import LoginScreen from './src/components/login';
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
-import { StyleSheet, Text, View } from 'react-native';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
+import * as Font from 'expo-font';
 const AuthStack = createStackNavigator({ SignIn: LoginScreen });
 
 const TabNavigator = createBottomTabNavigator({
@@ -39,6 +39,13 @@ const switchNavigator =  createSwitchNavigator(
 const AppContainer = createAppContainer(switchNavigator);
 
 export default class App extends React.Component {
+  componentDidMount() {
+    // TODO: set real fonts, find out why these don't seem to load.
+    Font.loadAsync({
+      'Georgia': require('./src/assets/fonts/Roboto/Roboto-Bold.ttf'),
+      'sans-serif': require('./src/assets/fonts/Roboto/Roboto-Bold.ttf'),
+    });
+  }
   render() {
     return <AppContainer />;
   }

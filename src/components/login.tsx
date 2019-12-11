@@ -22,7 +22,7 @@ class LoginScreen extends React.Component<Props> {
   componentDidMount = async () => {
     try {
       const body = await AsyncStorage.getItem('password');
-      if (body !== "null") {
+      if (body !== "null" && body !== null) {
         fetch("https://www.groupdevotions.com/rest/account/localLogin", {
           method: "POST",
           headers: {
