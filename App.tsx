@@ -6,23 +6,41 @@ import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import * as Font from 'expo-font';
+// TODO import icons with fonts
+import { Ionicons } from '@expo/vector-icons';
+
 const AuthStack = createStackNavigator({ SignIn: LoginScreen });
 
 const TabNavigator = createBottomTabNavigator({
-  Group: Group,
-  Devotion: DevotionScreen,
+  Group: {
+    screen: Group,
+    navigationOptions: {
+      tabBarLabel:"",
+      tabBarIcon: ({ tintColor }) => (
+        <Ionicons name="md-mail" color={tintColor} size={32}  />
+      )
+    },
+  },
+  Devotion: {
+    screen: DevotionScreen,
+    navigationOptions: {
+      tabBarLabel:"",
+      tabBarIcon: ({ tintColor }) => (
+        <Ionicons name="ios-bookmark" color={tintColor} size={32} />
+      )
+    },
+  },
+  
 },
+
 {
   tabBarOptions: {
-    activeTintColor: 'black',
-    inactiveTintColor: '#00ada7',
-    activeBackgroundColor: '#00ada7',
+    showIcon: true,
+    showLabel: false,
+    inactiveTintColor: 'black',
+    activeTintColor: '#00ada7',
+    activeBackgroundColor: '#E0E0E0',
     inactiveBackgroundColor: '#E0E0E0',
-    labelStyle: {
-      fontWeight: "bold",
-      fontFamily: "Georgia",
-      fontSize: 30,
-    },
   },
 }
 );
