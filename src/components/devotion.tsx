@@ -10,15 +10,11 @@ import HeaderTitle from "./headerTitle";
 import { NavigationStackOptions } from "react-navigation-stack";
 import { ScrollView } from "react-native-gesture-handler";
 import DevotionHeader from "./devotionHeader";
-import GlobalVars from "../../GlobalVars";
 import HTMLView from "react-native-htmlview";
 
 class DevotionScreen extends React.Component {
   static navigationOptions: NavigationStackOptions = {
-    title: "Devotion",
-    headerStyle: { height: 90 },
-    headerTitleContainerStyle: { backgroundColor: GlobalVars.colors.primary },
-    headerTitle: <HeaderTitle title="Devotion" />
+    title: "Devotions",
   };
   state = {
     title: "",
