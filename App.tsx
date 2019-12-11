@@ -8,19 +8,11 @@ import { createBottomTabNavigator } from 'react-navigation-tabs';
 import * as Font from 'expo-font';
 // TODO import icons with fonts
 import { Ionicons } from '@expo/vector-icons';
+import Settings from './src/components/settings';
 
 const AuthStack = createStackNavigator({ SignIn: LoginScreen });
 
 const TabNavigator = createBottomTabNavigator({
-  Group: {
-    screen: Group,
-    navigationOptions: {
-      tabBarLabel:"",
-      tabBarIcon: ({ tintColor }) => (
-        <Ionicons name="md-mail" color={tintColor} size={32}  />
-      )
-    },
-  },
   Devotion: {
     screen: DevotionScreen,
     navigationOptions: {
@@ -30,7 +22,23 @@ const TabNavigator = createBottomTabNavigator({
       )
     },
   },
-  
+  Group: {
+    screen: Group,
+    navigationOptions: {
+      tabBarLabel:"",
+      tabBarIcon: ({ tintColor }) => (
+        <Ionicons name="md-mail" color={tintColor} size={32}  />
+      )
+    },
+  },
+  Settings: {
+    screen: Settings,
+    navigationOptions: {
+      tabBarIcon: ({tintColor}) => (
+        <Ionicons name="ios-settings" color={tintColor} size={32}/>
+      )
+    }
+  }
 },
 
 {
