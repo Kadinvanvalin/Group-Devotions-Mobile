@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Platform, KeyboardAvoidingView, StyleSheet } from "react-native";
 import { GiftedChat } from "react-native-gifted-chat";
-import axios from "axios"
 
 interface User {
   _id: any;
@@ -31,17 +30,16 @@ class Group extends Component {
 
   componentWillMount() {
     const groupChatUrl = "https://www.groupdevotions.com/rest/blog/query"
-    axios.get(groupChatUrl,
-      { withCredentials: true, headers: {
-      }}
-    ).then((response) => {
-      this.setState({
-        messages: response.data.data.map(data =>
+
+    fetch(groupChatUrl, {method:"GET"})
+      .then((response) => response.json())
+      .then((response) => {
+        this.setState({
+        messages: response.data.map(data =>
           data.blogEntries.map(this.transform).flat()
           ).flat().map((message, i) => {return {...message, _id: i}})
         });
       })
-
   }
   transform(blogPost: BlogPost, i): Message {
     function getDate(strDate): Date {

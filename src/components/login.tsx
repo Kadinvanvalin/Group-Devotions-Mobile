@@ -8,8 +8,7 @@ import {
   ScrollView,
   Button
 } from "react-native";
-import axios from "axios";
-import makeRequest from './react-cookie'
+
 interface Props {
   navigation: any
 }

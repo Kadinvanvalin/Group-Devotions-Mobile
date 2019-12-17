@@ -11,7 +11,6 @@ import { NavigationStackOptions } from "react-navigation-stack";
 import { ScrollView } from "react-native-gesture-handler";
 import DevotionHeader from "./devotionHeader";
 import HTMLView from "react-native-htmlview";
-import axios from "axios";
 
 class DevotionScreen extends React.Component {
   static navigationOptions: NavigationStackOptions = {
@@ -27,10 +26,8 @@ class DevotionScreen extends React.Component {
   componentDidMount = () => {
     // TODO make into service
     const loggedInUrl = "https://www.groupdevotions.com/rest/devotion/today?anticache=" + (new Date()).toString();
-        axios.get(loggedInUrl,
-          { withCredentials: true, headers: {
-          }}
-        )
+    fetch(loggedInUrl, { credentials: 'include', method:"GET"})
+      .then((response) => response.json())
       .then(response => {
         const {
           title,
@@ -38,7 +35,7 @@ class DevotionScreen extends React.Component {
           devotionPageTagLine,
           studySections,
           copyright
-        } = response.data.data.studyLessons[0];
+        } = response.data.studyLessons[0];
         this.setState({devos: [{
           title,
           author,
