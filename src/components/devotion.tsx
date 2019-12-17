@@ -11,38 +11,41 @@ import { NavigationStackOptions } from "react-navigation-stack";
 import { ScrollView } from "react-native-gesture-handler";
 import DevotionHeader from "./devotionHeader";
 import HTMLView from "react-native-htmlview";
+import axios from "axios";
 
 class DevotionScreen extends React.Component {
   static navigationOptions: NavigationStackOptions = {
     title: "Devotions",
   };
-  state = {
+  state = {devos: [{
     title: "",
     author: "",
     devotionPageTagLine: "",
     studySections: [],
     copyright: "",
-  };
+  }]}
   componentDidMount = () => {
-    fetch("https://www.groupdevotions.com/rest/devotion/dunamai", {
-      method: "GET"
-    })
-      .then(response => response.json())
-      .then(responseJson => {
+    // TODO make into service
+    const loggedInUrl = "https://www.groupdevotions.com/rest/devotion/today?anticache=" + (new Date()).toString();
+        axios.get(loggedInUrl,
+          { withCredentials: true, headers: {
+          }}
+        )
+      .then(response => {
         const {
           title,
           author,
           devotionPageTagLine,
           studySections,
           copyright
-        } = responseJson.data.studyLessons[0];
-        this.setState({
+        } = response.data.data.studyLessons[0];
+        this.setState({devos: [{
           title,
           author,
           devotionPageTagLine,
           studySections,
           copyright
-        });
+        }]});
       })
       .catch(error => {
         console.error(error);
@@ -53,28 +56,34 @@ class DevotionScreen extends React.Component {
     return (
       <SafeAreaView style={styles.container}>
         <ScrollView>
-          <DevotionHeader
-            title={this.state.title}
-            author={this.state.author}
-            devotionPageTagLine={this.state.devotionPageTagLine}
-          />
+          {this.state.devos.map((devo, i) => {
+            return <View key={i}>
+              <DevotionHeader
+              title={devo.title}
+              author={devo.author}
+              devotionPageTagLine={devo.devotionPageTagLine}
+              />
+          
 
           {/* The only reason we are using key={i} is because we know this array will NEVER change. It is not safe to use in all contexts*/}
-          {this.state.studySections.map((section, i) =>
+          {devo.studySections.map((section, i) =>
             section.type === "SCRIPTURE" ? (
               <Scripture key={i} content={section.content} />
-            ) : (
-              <Text style={styles.text} key={i}>
+              ) : (
+                <Text style={styles.text} key={i}>
                 {section.content}
               </Text>
             )
-          )}
+            )}
           <View style={styles.copyright}>
             <HTMLView
-              value={this.state.copyright}
+              value={devo.copyright}
               stylesheet={copyrightStyles}
-            />
+              />
           </View>
+          </View>
+            })}
+     
         </ScrollView>
       </SafeAreaView>
     );

@@ -8,7 +8,8 @@ import {
   ScrollView,
   Button
 } from "react-native";
-
+import axios from "axios";
+import makeRequest from './react-cookie'
 interface Props {
   navigation: any
 }
@@ -19,7 +20,7 @@ class LoginScreen extends React.Component<Props> {
     this.onLoginPress = this.onLoginPress.bind(this);
   }
 
-  componentDidMount = async () => {
+  xcomponentDidMount = async () => {
     try {
       const body = await AsyncStorage.getItem('password');
       if (body !== "null" && body !== null) {
@@ -88,7 +89,6 @@ class LoginScreen extends React.Component<Props> {
     const opts = {
       "email": state.email,
       "password": state.password,
-      // "test123",
       "url": "https://www.groupdevotions.com/",
       "stayLoggedIn": true
     }
@@ -96,7 +96,6 @@ class LoginScreen extends React.Component<Props> {
     fetch("https://www.groupdevotions.com/rest/account/localLogin", {
       method: "POST",
       headers: {
-        // 'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
       body,
@@ -105,7 +104,7 @@ class LoginScreen extends React.Component<Props> {
       .then(async obj => {
         const {responseJson, response} = obj
         if(responseJson.operationSuccessful) {
-          // TODO: WARNING We should not save an unhashed password in the final app
+           // TODO: WARNING We should not save an unhashed password in the final app
           await AsyncStorage.setItem('password', body);
           this.props.navigation.navigate('App');
         } else {
