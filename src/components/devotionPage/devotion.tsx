@@ -6,43 +6,53 @@ import {
   SafeAreaView
 } from "react-native";
 import Scripture from "./scripture";
-import HeaderTitle from "./headerTitle";
 import { NavigationStackOptions } from "react-navigation-stack";
 import { ScrollView } from "react-native-gesture-handler";
 import DevotionHeader from "./devotionHeader";
 import HTMLView from "react-native-htmlview";
+import AccountabilityLesson from "./accountabilityLesson/accountabilityLesson";
 
 class DevotionScreen extends React.Component {
   static navigationOptions: NavigationStackOptions = {
     title: "Devotions",
   };
-  state = {devos: [{
+  state = {lessons: [{
     title: "",
     author: "",
     devotionPageTagLine: "",
     studySections: [],
     copyright: "",
-  }]}
+  }],
+  accountabilityLessons: [{
+    studySections: [
+      {
+        "answers": [],
+        "content": "",
+        "creationTimestamp": "",
+        "rawHtml": false,
+        "type": "DIALOG",
+      }
+
+    ],
+  }]
+}
   componentDidMount = () => {
     // TODO make into service
-    const loggedInUrl = "https://www.groupdevotions.com/rest/devotion/today?anticache=" + (new Date()).toString();
-    fetch(loggedInUrl, { credentials: 'include', method:"GET"})
+    const loggedInUrl = "https://www.groupdevotions.com/rest/devotion/today" 
+    // ?anticache=" + (new Date()).toString();
+    fetch(loggedInUrl, {
+      credentials: 'include',
+      method:"GET",
+      headers: {
+        'Content-Type': 'application/json'
+        },
+    })
       .then((response) => response.json())
       .then(response => {
-        const {
-          title,
-          author,
-          devotionPageTagLine,
-          studySections,
-          copyright
-        } = response.data.studyLessons[0];
-        this.setState({devos: [{
-          title,
-          author,
-          devotionPageTagLine,
-          studySections,
-          copyright
-        }]});
+        const lessons = response.data.studyLessons.filter((lesson) => !lesson.accountabilityLesson)
+        const accountabilityLessons = response.data.studyLessons.filter((lesson) => lesson.accountabilityLesson)
+        accountabilityLessons.forEach(console.log);
+        this.setState({lessons, accountabilityLessons});
       })
       .catch(error => {
         console.error(error);
@@ -53,15 +63,13 @@ class DevotionScreen extends React.Component {
     return (
       <SafeAreaView style={styles.container}>
         <ScrollView>
-          {this.state.devos.map((devo, i) => {
+          {this.state.lessons.map((devo, i) => {
             return <View key={i}>
               <DevotionHeader
               title={devo.title}
               author={devo.author}
               devotionPageTagLine={devo.devotionPageTagLine}
               />
-          
-
           {/* The only reason we are using key={i} is because we know this array will NEVER change. It is not safe to use in all contexts*/}
           {devo.studySections.map((section, i) =>
             section.type === "SCRIPTURE" ? (
@@ -80,7 +88,8 @@ class DevotionScreen extends React.Component {
           </View>
           </View>
             })}
-     
+             <AccountabilityLesson accountabilityLessons={this.state.accountabilityLessons}></AccountabilityLesson>
+       {/* { this.state.accountabilityLessons[0].studySections.map((lesson, i) => { return  (<View key={i}><Text>{lesson.content}</Text></View>)}) } */}
         </ScrollView>
       </SafeAreaView>
     );

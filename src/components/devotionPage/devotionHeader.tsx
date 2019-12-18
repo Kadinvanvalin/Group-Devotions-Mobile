@@ -1,7 +1,5 @@
 import React from 'react';
 import { View, Text, Dimensions, Image, StyleSheet } from 'react-native'
-// import SvgAnimatedLinearGradient from "react-native-svg-animated-linear-gradient";
-// import { Rect } from "react-native-svg";
 const DevotionHeader = (props) => {
   if(props.title) {
     return (
@@ -14,11 +12,6 @@ const DevotionHeader = (props) => {
     } else {
       return(
         <View style={styles.container}>
-           {/* <SvgAnimatedLinearGradient width={Dimensions.get('window').width} height={60}>
-            <Rect rx="4" ry="4" width="100" height="14"/>
-            <Rect y="17" rx="4" ry="4" width={Dimensions.get('window').width - 32 - 100} height="25"/>
-            <Rect y="44" rx="4" ry="4" width="100" height="16"/>
-         </SvgAnimatedLinearGradient>  */}
       </View>
       )
     }

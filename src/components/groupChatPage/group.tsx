@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Platform, KeyboardAvoidingView, StyleSheet } from "react-native";
 import { GiftedChat } from "react-native-gifted-chat";
-
+import SlackMessage from "./message"
 interface User {
   _id: any;
   name: string;
@@ -72,6 +72,7 @@ class Group extends Component {
       <GiftedChat
         messages={this.state.messages}
         // onSend={messages => this.onSend(messages)}
+        renderMessage={this.renderMessage}
         user={{
           _id: "Kadin"
         }}
@@ -82,6 +83,26 @@ class Group extends Component {
       // }
       // )
     );
+  }
+
+  renderMessage(props) {
+    const {
+      currentMessage: { text: currText },
+    } = props
+
+    let messageTextStyle
+
+    // Make "pure emoji" messages much bigger than plain text.
+    // if (currText && emojiUtils.isPureEmojiString(currText)) {
+    if(true) { 
+      messageTextStyle = {
+        fontSize: 28,
+        // Emoji get clipped if lineHeight isn't increased; make it consistent across platforms.
+        lineHeight: Platform.OS === 'android' ? 34 : 30,
+      }
+    }
+
+    return <SlackMessage {...props} messageTextStyle={messageTextStyle} />
   }
 }
 export default Group;

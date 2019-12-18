@@ -19,38 +19,6 @@ class LoginScreen extends React.Component<Props> {
     this.onLoginPress = this.onLoginPress.bind(this);
   }
 
-  xcomponentDidMount = async () => {
-    try {
-      const body = await AsyncStorage.getItem('password');
-      if (body !== "null" && body !== null) {
-        fetch("https://www.groupdevotions.com/rest/account/localLogin", {
-          method: "POST",
-          headers: {
-            'Content-Type': 'application/json'
-            },
-            body
-        })
-          .then(response => response.json())
-          .then(responseJson => {
-            if(responseJson.operationSuccessful) {
-              console.log("already logged in")
-              this.props.navigation.navigate('App');
-            } else {
-              alert(responseJson.message.text)
-            }
-          })
-          .catch(error => {
-            console.error(error);
-          });
-      } else {
-        console.log("no cookie")
-      }
-    } catch (error) {
-      // Error retrieving data
-    }
-
-  }
-
   render() {
     return (
       <ScrollView style={{padding: 20}}>
@@ -80,6 +48,37 @@ class LoginScreen extends React.Component<Props> {
       </ScrollView>
 
     );
+  }
+
+  xcomponentDidMount = async () => {
+    try {
+      const body = await AsyncStorage.getItem('password');
+      if (body !== "null" && body !== null) {
+        fetch("https://www.groupdevotions.com/rest/account/localLogin", {
+          method: "POST",
+          headers: {
+            'Content-Type': 'application/json'
+            },
+            body
+        })
+          .then(response => response.json())
+          .then(responseJson => {
+            if(responseJson.operationSuccessful) {
+              console.log("already logged in")
+              this.props.navigation.navigate('App');
+            } else {
+              alert(responseJson.message.text)
+            }
+          })
+          .catch(error => {
+            console.error(error);
+          });
+      } else {
+        console.log("no cookie")
+      }
+    } catch (error) {
+      // Error retrieving data
+    }
   }
 
   onLoginPress() {
@@ -119,27 +118,27 @@ class LoginScreen extends React.Component<Props> {
 export default LoginScreen;
 
 
-const copyrightStyles = StyleSheet.create({
-  b: {
-    fontWeight: "bold"
-  }
-});
-const styles = StyleSheet.create({
-  copyright: {
-    marginTop: 20,
-    marginLeft: 20,
-    marginRight: 20
-  },
-  container: {
-    alignItems: "center",
-    flex: 1
-  },
-  text: {
-    marginLeft: 20,
-    marginRight: 20,
-    fontFamily: "Verdana",
-    color: "#404040",
-    fontSize: 16,
-    fontWeight: "bold"
-  }
-});
+// const copyrightStyles = StyleSheet.create({
+//   b: {
+//     fontWeight: "bold"
+//   }
+// });
+// const styles = StyleSheet.create({
+//   copyright: {
+//     marginTop: 20,
+//     marginLeft: 20,
+//     marginRight: 20
+//   },
+//   container: {
+//     alignItems: "center",
+//     flex: 1
+//   },
+//   text: {
+//     marginLeft: 20,
+//     marginRight: 20,
+//     fontFamily: "Verdana",
+//     color: "#404040",
+//     fontSize: 16,
+//     fontWeight: "bold"
+//   }
+// });
