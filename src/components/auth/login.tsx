@@ -19,38 +19,6 @@ class LoginScreen extends React.Component<Props> {
     this.onLoginPress = this.onLoginPress.bind(this);
   }
 
-  componentDidMount = async () => {
-    try {
-      const body = await AsyncStorage.getItem('password');
-      if (body !== "null" && body !== null) {
-        fetch("https://www.groupdevotions.com/rest/account/localLogin", {
-          method: "POST",
-          headers: {
-            'Content-Type': 'application/json'
-            },
-            body
-        })
-          .then(response => response.json())
-          .then(responseJson => {
-            if(responseJson.operationSuccessful) {
-              console.log("already logged in")
-              this.props.navigation.navigate('App');
-            } else {
-              alert(responseJson.message.text)
-            }
-          })
-          .catch(error => {
-            console.error(error);
-          });
-      } else {
-        console.log("no cookie")
-      }
-    } catch (error) {
-      // Error retrieving data
-    }
-
-  }
-
   render() {
     return (
       <ScrollView style={{padding: 20}}>
@@ -82,13 +50,43 @@ class LoginScreen extends React.Component<Props> {
     );
   }
 
+  xcomponentDidMount = async () => {
+    try {
+      const body = await AsyncStorage.getItem('password');
+      if (body !== "null" && body !== null) {
+        fetch("https://www.groupdevotions.com/rest/account/localLogin", {
+          method: "POST",
+          headers: {
+            'Content-Type': 'application/json'
+            },
+            body
+        })
+          .then(response => response.json())
+          .then(responseJson => {
+            if(responseJson.operationSuccessful) {
+              console.log("already logged in")
+              this.props.navigation.navigate('App');
+            } else {
+              alert(responseJson.message.text)
+            }
+          })
+          .catch(error => {
+            console.error(error);
+          });
+      } else {
+        console.log("no cookie")
+      }
+    } catch (error) {
+      // Error retrieving data
+    }
+  }
+
   onLoginPress() {
     const state = this.state as any;
     // this.setState
     const opts = {
       "email": state.email,
       "password": state.password,
-      // "test123",
       "url": "https://www.groupdevotions.com/",
       "stayLoggedIn": true
     }
@@ -96,7 +94,6 @@ class LoginScreen extends React.Component<Props> {
     fetch("https://www.groupdevotions.com/rest/account/localLogin", {
       method: "POST",
       headers: {
-        // 'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
       body,
@@ -105,7 +102,7 @@ class LoginScreen extends React.Component<Props> {
       .then(async obj => {
         const {responseJson, response} = obj
         if(responseJson.operationSuccessful) {
-          // TODO: WARNING We should not save an unhashed password in the final app
+           // TODO: WARNING We should not save an unhashed password in the final app
           await AsyncStorage.setItem('password', body);
           this.props.navigation.navigate('App');
         } else {
@@ -121,27 +118,27 @@ class LoginScreen extends React.Component<Props> {
 export default LoginScreen;
 
 
-const copyrightStyles = StyleSheet.create({
-  b: {
-    fontWeight: "bold"
-  }
-});
-const styles = StyleSheet.create({
-  copyright: {
-    marginTop: 20,
-    marginLeft: 20,
-    marginRight: 20
-  },
-  container: {
-    alignItems: "center",
-    flex: 1
-  },
-  text: {
-    marginLeft: 20,
-    marginRight: 20,
-    fontFamily: "Verdana",
-    color: "#404040",
-    fontSize: 16,
-    fontWeight: "bold"
-  }
-});
+// const copyrightStyles = StyleSheet.create({
+//   b: {
+//     fontWeight: "bold"
+//   }
+// });
+// const styles = StyleSheet.create({
+//   copyright: {
+//     marginTop: 20,
+//     marginLeft: 20,
+//     marginRight: 20
+//   },
+//   container: {
+//     alignItems: "center",
+//     flex: 1
+//   },
+//   text: {
+//     marginLeft: 20,
+//     marginRight: 20,
+//     fontFamily: "Verdana",
+//     color: "#404040",
+//     fontSize: 16,
+//     fontWeight: "bold"
+//   }
+// });
