@@ -26,12 +26,12 @@ class LoginScreen extends React.Component<Props> {
           Login
         </Text>
         <TextInput
-        style={{height: 45,width: "95%",borderColor: "gray",borderWidth: 2, marginBottom: 25}}
+        style={styles.textInput}
         onChangeText={(value) => this.setState({email: value})}
         placeholder=' Enter Your Email' />
         <TextInput
          onChangeText={(value) => this.setState({password: value})}
-        style={{height: 45,width: "95%",borderColor: "gray",borderWidth: 2}}
+        style={styles.textInput}
         // Adding hint in TextInput using Placeholder option.
         placeholder=" Enter Your Password"          
         // Making the Under line Transparent.
@@ -118,27 +118,6 @@ class LoginScreen extends React.Component<Props> {
 export default LoginScreen;
 
 
-// const copyrightStyles = StyleSheet.create({
-//   b: {
-//     fontWeight: "bold"
-//   }
-// });
-// const styles = StyleSheet.create({
-//   copyright: {
-//     marginTop: 20,
-//     marginLeft: 20,
-//     marginRight: 20
-//   },
-//   container: {
-//     alignItems: "center",
-//     flex: 1
-//   },
-//   text: {
-//     marginLeft: 20,
-//     marginRight: 20,
-//     fontFamily: "Verdana",
-//     color: "#404040",
-//     fontSize: 16,
-//     fontWeight: "bold"
-//   }
-// });
+const styles = StyleSheet.create({
+  textInput: {height: 45, width: "95%",borderColor: "gray", borderWidth: 2, paddingLeft:15, marginBottom: 25},
+});
