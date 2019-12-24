@@ -5,7 +5,7 @@ import {
   StyleSheet,
   } from "react-native";
 import RadioButton from "../../radioButton";
-class YesNoQuestion extends React.Component<any, any> {
+class YesNoQuestionComponent extends React.Component<any, any> {
   
  options = [
 	{
@@ -44,5 +44,5 @@ const styles = StyleSheet.create ({
      fontWeight: "bold",
   },
 })
-export default YesNoQuestion;
+export default YesNoQuestionComponent;
 

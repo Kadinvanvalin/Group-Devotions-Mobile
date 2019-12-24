@@ -1,5 +1,5 @@
 import React from 'react';
-import DevotionScreen from './src/components/devotionPage/devotion';
+import DevotionScreen from './src/components/devotionPage/devotionPage';
 import Group from './src/components/groupChatPage/group';
 import LoginScreen from './src/components/auth/login';
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';

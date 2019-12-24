@@ -21,7 +21,6 @@ class LoginScreen extends React.Component<Props> {
     super(props);
     this.onLoginPress = this.onLoginPress.bind(this);
   }
-
   render() {
     return (
       <ScrollView style={{ padding: 20 }}>
@@ -63,10 +62,9 @@ class LoginScreen extends React.Component<Props> {
           .then(response => response.json())
           .then(responseJson => {
             if (responseJson.operationSuccessful) {
-              console.log("already logged in");
               this.props.navigation.navigate("App");
             } else {
-              alert(responseJson.message.text);
+              console.log(responseJson.message.text);
             }
           })
           .catch(error => {
@@ -104,6 +102,7 @@ class LoginScreen extends React.Component<Props> {
       .then(async obj => {
         const { responseJson, response } = obj;
         if (responseJson.operationSuccessful) {
+          console.log(response);
           // TODO: WARNING We should not save an unhashed password in the final app
           await AsyncStorage.setItem("password", body);
           this.props.navigation.navigate("App");

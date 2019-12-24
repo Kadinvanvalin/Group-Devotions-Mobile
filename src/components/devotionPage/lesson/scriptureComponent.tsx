@@ -1,17 +1,16 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native'
 
-const Scripture = (props) => {
+const ScriptureComponent = (props) => {
    return (
-    <View style = {styles.container}>
+      <View style = {styles.container}>
          <Text style = {styles.text}>
           {props.content}
          </Text>
       </View>
-
    )
 }
-export default Scripture
+export default ScriptureComponent
 
 const styles = StyleSheet.create ({
   container: {

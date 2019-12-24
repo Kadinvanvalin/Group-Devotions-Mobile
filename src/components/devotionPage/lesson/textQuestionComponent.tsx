@@ -3,14 +3,25 @@ import {
   View,
   Text,
   StyleSheet,
+  TextInput
   } from "react-native";
 
-class Dialog extends React.Component<any, any> {
   
+  // const [value, onChangeText] = React.useState('Useless Placeholder');
+class TextQuestionComponent extends React.Component<any, any> {
+  value: 'Useless Placeholder';
   render() {
     return (
      <View style={styles.container}>
        <Text style={styles.text}>{this.props.children}</Text>
+       <TextInput 
+              style={{height: 45,width: "95%",borderColor: "gray",borderWidth: 2}}
+              // Adding hint in TextInput using Placeholder option.
+              placeholder=" Enter Your Answer"          
+              // Making the Under line Transparent.
+              underlineColorAndroid="transparent"
+              // Making the Text Input Text Hidden.
+       />
     </View>
     );
   }
@@ -33,5 +44,5 @@ const styles = StyleSheet.create ({
      fontWeight: "bold",
   },
 })
-export default Dialog;
+export default TextQuestionComponent;
 

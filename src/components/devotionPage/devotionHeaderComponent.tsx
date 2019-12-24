@@ -1,12 +1,12 @@
 import React from 'react';
-import { View, Text, Dimensions, Image, StyleSheet } from 'react-native'
-const DevotionHeader = (props) => {
+import { View, Text, Dimensions, StyleSheet } from 'react-native'
+const DevotionHeaderComponent = (props) => {
   if(props.title) {
     return (
       <View style={styles.container}>
         <Text style={styles.tagLine}>{props.devotionPageTagLine}</Text>
         <Text style={styles.title}>{props.title}</Text>
-        <Text style={styles.author}>By {props.author}</Text>
+        <Text style={styles.author}>{props.author ? "By" : "" } {props.author}</Text>
       </View>
     );
     } else {
@@ -16,7 +16,7 @@ const DevotionHeader = (props) => {
       )
     }
 }
-export default DevotionHeader
+export default DevotionHeaderComponent
 
 const styles = StyleSheet.create ({
   container: {
