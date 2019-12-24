@@ -92,6 +92,7 @@ class LoginScreen extends React.Component<Props> {
     const body = JSON.stringify(opts);
     fetch(SERVER_URL + "/rest/account/localLogin", {
       method: "POST",
+      credentials: "include",
       headers: {
         "Content-Type": "application/json"
       },
