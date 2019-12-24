@@ -15,8 +15,7 @@ class DevotionScreen extends React.Component {
   static navigationOptions: NavigationStackOptions = {
     title: "Devotions",
   };
-  state = {
-    currentLessonIndex: 0,
+  state: { lessons: Lesson[] }= {
     lessons: [{
       title: "",
       accountabilityLesson: false,
@@ -25,10 +24,7 @@ class DevotionScreen extends React.Component {
       studySections: [],
       copyright: "",
     }],
-}
-currentLesson(): Lesson {
-  return this.state.lessons[this.state.currentLessonIndex];
-}
+  }
   componentDidMount = () => {
     // TODO make into service
     const loggedInUrl = `${SERVER_URL}/rest/devotion/today`;
@@ -56,7 +52,7 @@ currentLesson(): Lesson {
     return (
       <SafeAreaView style={styles.container}>
         <ScrollView>
-          { this.state.lessons.map((devotion, i) => <LessonComponent key={i} devotion={devotion} />) }
+          { this.state.lessons.map((lesson, i) => <LessonComponent key={i} lesson={lesson} />) }
         </ScrollView>
       </SafeAreaView>
     )

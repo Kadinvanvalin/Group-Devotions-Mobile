@@ -8,7 +8,7 @@ import { Text, View } from "react-native"
 const StudySectionsComponent = (props) => {
     return <>
     {  
-      props.currentLesson.studySections.map((section, i) => {
+      props.studySections.map((section, i) => {
         if(section.type === 'SCRIPTURE') return <ScriptureComponent key={i} content={section.content} />
         if(section.type === 'DIALOG') return <DialogComponent key={i}>{section.content}</DialogComponent>
         if(section.type === 'YESNO_QUESTION') return <YesNoQuestionComponent key={i}> {section.content}</YesNoQuestionComponent>

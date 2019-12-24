@@ -3,20 +3,19 @@ import { View } from 'react-native';
 import DevotionHeaderComponent from "../devotionHeaderComponent";
 import StudySectionsComponent from "./studySectionsComponent";
 import CopyrightComponent from "./copyrightComponent";
-class LessonComponent extends React.Component<any, any> {
-  render() {
+
+const LessonComponent = (props) => {
     return (
               <View>
                 <DevotionHeaderComponent
-                  title={this.props.devotion.title}
-                  author={this.props.devotion.author}
-                  devotionPageTagLine={this.props.devotion.devotionPageTagLine}
+                  title={props.lesson.title}
+                  author={props.lesson.author}
+                  devotionPageTagLine={props.lesson.devotionPageTagLine}
                 />
-                <StudySectionsComponent currentLesson={this.props.devotion}/>
-                <CopyrightComponent copyright={this.props.devotion.copyright}/>
+                <StudySectionsComponent studySections={props.lesson.studySections}/>
+                <CopyrightComponent copyright={props.lesson.copyright}/>
               </View>
             );
-  }
 }
 
 export default LessonComponent;
