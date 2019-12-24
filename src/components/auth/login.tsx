@@ -9,10 +9,8 @@ import {
   Button
 } from "react-native";
 import { SERVER_URL, DEFAULT_EMAIL, DEFAULT_PW } from 'react-native-dotenv';
+import Props from "../../types/props";
 
-interface Props {
-  navigation: any;
-}
 
 class LoginScreen extends React.Component<Props> {
   state = {email: DEFAULT_EMAIL, password: DEFAULT_PW};
