@@ -11,6 +11,7 @@ import { ScrollView } from "react-native-gesture-handler";
 import DevotionHeader from "./devotionHeader";
 import HTMLView from "react-native-htmlview";
 import AccountabilityLesson from "./accountabilityLesson/accountabilityLesson";
+import { SERVER_URL } from 'react-native-dotenv';
 
 class DevotionScreen extends React.Component {
   static navigationOptions: NavigationStackOptions = {
@@ -38,7 +39,7 @@ class DevotionScreen extends React.Component {
 }
   componentDidMount = () => {
     // TODO make into service
-    const loggedInUrl = "https://www.groupdevotions.com/rest/devotion/today" 
+    const loggedInUrl = SERVER_URL + "/rest/devotion/today"
     // ?anticache=" + (new Date()).toString();
     fetch(loggedInUrl, {
       credentials: 'include',

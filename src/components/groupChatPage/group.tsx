@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import { Platform, KeyboardAvoidingView, StyleSheet } from "react-native";
 import { GiftedChat } from "react-native-gifted-chat";
-import SlackMessage from "./message"
+import SlackMessage from "./message";
+import { SERVER_URL } from 'react-native-dotenv';
+
 interface User {
   _id: any;
   name: string;
@@ -29,7 +31,7 @@ class Group extends Component {
   };
 
   componentWillMount() {
-    const groupChatUrl = "https://www.groupdevotions.com/rest/blog/query"
+    const groupChatUrl = SERVER_URL + "/rest/blog/query"
 
     fetch(groupChatUrl, {method:"GET"})
       .then((response) => response.json())
