@@ -62,11 +62,9 @@ class LoginScreen extends React.Component<Props> {
           .then(response => response.json())
           .then(responseJson => {
             if (responseJson.operationSuccessful) {
-              console.log("already logged in");
               this.props.navigation.navigate("App");
             } else {
-              console.log("Cant log in!!")
-              alert(responseJson.message.text);
+              console.log(responseJson.message.text);
             }
           })
           .catch(error => {

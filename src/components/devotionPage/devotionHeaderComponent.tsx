@@ -6,7 +6,7 @@ const DevotionHeaderComponent = (props) => {
       <View style={styles.container}>
         <Text style={styles.tagLine}>{props.devotionPageTagLine}</Text>
         <Text style={styles.title}>{props.title}</Text>
-        <Text style={styles.author}>{props.author ? props.author : "" } {props.author}</Text>
+        <Text style={styles.author}>{props.author ? "By" : "" } {props.author}</Text>
       </View>
     );
     } else {
