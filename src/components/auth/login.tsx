@@ -8,27 +8,31 @@ import {
   ScrollView,
   Button
 } from "react-native";
+import { SERVER_URL, DEFAULT_EMAIL, DEFAULT_PW } from 'react-native-dotenv';
 
 interface Props {
   navigation: any;
 }
 
 class LoginScreen extends React.Component<Props> {
+  state = {email: DEFAULT_EMAIL, password: DEFAULT_PW};
+
   constructor(props) {
     super(props);
     this.onLoginPress = this.onLoginPress.bind(this);
   }
-  state = {email: "kadinvanvalin@yahoo.com", password: "test123"}
   render() {
     return (
       <ScrollView style={{ padding: 20 }}>
         <Text style={{ fontSize: 27 }}>Login</Text>
         <TextInput
           style={styles.textInput}
+          value={this.state.email}
           onChangeText={value => this.setState({ email: value })}
           placeholder=" Enter Your Email"
         />
         <TextInput
+          value={this.state.password}
           onChangeText={value => this.setState({ password: value })}
           style={styles.textInput}
           // Adding hint in TextInput using Placeholder option.
@@ -48,7 +52,7 @@ class LoginScreen extends React.Component<Props> {
     try {
       const body = await AsyncStorage.getItem("password");
       if (body !== "null" && body !== null) {
-        fetch("https://www.groupdevotions.com/rest/account/localLogin", {
+        fetch(SERVER_URL + "/rest/account/localLogin", {
           method: "POST",
           headers: {
             "Content-Type": "application/json"
@@ -80,13 +84,13 @@ class LoginScreen extends React.Component<Props> {
     const state = this.state as any;
     // this.setState
     const opts = {
-      email: state.email,
-      password: state.password,
-      url: "https://www.groupdevotions.com/",
-      stayLoggedIn: true
-    };
+      "email": state.email,
+      "password": state.password,
+      "url": SERVER_URL,
+      "stayLoggedIn": true
+    }
     const body = JSON.stringify(opts);
-    fetch("https://www.groupdevotions.com/rest/account/localLogin", {
+    fetch(SERVER_URL + "/rest/account/localLogin", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"

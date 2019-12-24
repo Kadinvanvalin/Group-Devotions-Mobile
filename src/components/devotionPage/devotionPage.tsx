@@ -7,6 +7,7 @@ import { NavigationStackOptions } from "react-navigation-stack";
 import { ScrollView } from "react-native-gesture-handler";
 import LessonComponent from "./lesson/lessonComponent";
 import Lesson from "../../types/lesson";
+import { SERVER_URL } from 'react-native-dotenv';
 class DevotionScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -30,10 +31,10 @@ currentLesson(): Lesson {
 }
   componentDidMount = () => {
     // TODO make into service
-    const loggedInUrl = "https://www.groupdevotions.com/rest/devotion/today" 
+    const loggedInUrl = `${SERVER_URL}/rest/devotion/today`;
     // ?anticache=" + (new Date()).toString();
     fetch(loggedInUrl, {
-      // credentials: 'include',
+      credentials: 'include',
       method:"GET",
       headers: {
         'Content-Type': 'application/json'

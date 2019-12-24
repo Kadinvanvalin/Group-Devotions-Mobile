@@ -19,7 +19,4 @@ const StudySectionsComponent = (props) => {
   </>
 }
 
-
-
 export default StudySectionsComponent;
-
