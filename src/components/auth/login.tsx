@@ -28,12 +28,12 @@ class LoginScreen extends React.Component<Props> {
         <Text style={{ fontSize: 27 }}>Login</Text>
         <TextInput
           style={styles.textInput}
-          value={DEFAULT_EMAIL}
+          value={this.state.email}
           onChangeText={value => this.setState({ email: value })}
           placeholder=" Enter Your Email"
         />
         <TextInput
-          value={DEFAULT_PW}
+          value={this.state.password}
           onChangeText={value => this.setState({ password: value })}
           style={styles.textInput}
           // Adding hint in TextInput using Placeholder option.
@@ -92,6 +92,7 @@ class LoginScreen extends React.Component<Props> {
     const body = JSON.stringify(opts);
     fetch(SERVER_URL + "/rest/account/localLogin", {
       method: "POST",
+      credentials: "include",
       headers: {
         "Content-Type": "application/json"
       },

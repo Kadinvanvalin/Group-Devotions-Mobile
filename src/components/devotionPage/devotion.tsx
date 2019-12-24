@@ -42,7 +42,7 @@ class DevotionScreen extends React.Component {
     const loggedInUrl = SERVER_URL + "/rest/devotion/today"
     // ?anticache=" + (new Date()).toString();
     fetch(loggedInUrl, {
-      credentials: 'include',
+      credentials: "include",
       method:"GET",
       headers: {
         'Content-Type': 'application/json'
