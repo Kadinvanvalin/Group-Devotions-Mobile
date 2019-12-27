@@ -10,10 +10,11 @@ import {
 } from "react-native";
 import { SERVER_URL, DEFAULT_EMAIL, DEFAULT_PW } from 'react-native-dotenv';
 import Props from "../../types/props";
+import MessageComponent from "../MessageComponent";
 
 
 class LoginScreen extends React.Component<Props> {
-  state = {email: DEFAULT_EMAIL, password: DEFAULT_PW};
+  state = {email: DEFAULT_EMAIL, password: DEFAULT_PW, message: null};
 
   constructor(props) {
     super(props);
@@ -22,6 +23,7 @@ class LoginScreen extends React.Component<Props> {
   render() {
     return (
       <ScrollView style={{ padding: 20 }}>
+        <MessageComponent message={this.state.message}/>
         <Text style={{ fontSize: 27 }}>Login</Text>
         <TextInput
           style={styles.textInput}
@@ -62,7 +64,7 @@ class LoginScreen extends React.Component<Props> {
             if (responseJson.operationSuccessful) {
               this.props.navigation.navigate("App");
             } else {
-              console.log(responseJson.message.text);
+              this.setState({message: responseJson.message})
             }
           })
           .catch(error => {
@@ -105,7 +107,7 @@ class LoginScreen extends React.Component<Props> {
           await AsyncStorage.setItem("password", body);
           this.props.navigation.navigate("App");
         } else {
-          console.log(responseJson);
+          this.setState({message: responseJson.message})
         }
       })
       .catch(error => {
