@@ -32,8 +32,7 @@ class DevotionScreen extends React.Component {
     }],
   }
   componentDidMount = () => {
-    const loggedInUrl = `${SERVER_URL}/rest/devotion/today`;
-    // ?anticache=" + (new Date()).toString();
+    const loggedInUrl = `${SERVER_URL}/rest/devotion/today?anticache=${(new Date()).toString()}`;
     this.setState({isLoading: true});
     fetch(loggedInUrl, {
       credentials: 'include',
