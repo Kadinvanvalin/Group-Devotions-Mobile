@@ -5,7 +5,7 @@ const ScriptureComponent = (props) => {
    return (
       <View style = {styles.container}>
          <Text style = {styles.text}>
-          {props.content}
+          {props.children}
          </Text>
       </View>
    )
