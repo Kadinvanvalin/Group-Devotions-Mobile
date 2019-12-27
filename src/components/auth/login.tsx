@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import { SERVER_URL, DEFAULT_EMAIL, DEFAULT_PW } from 'react-native-dotenv';
 import Props from "../../types/props";
-import MessageComponent from "../MessageComponent";
+import MessageComponent from "../messageComponent";
 
 
 class LoginScreen extends React.Component<Props> {
@@ -69,12 +69,13 @@ class LoginScreen extends React.Component<Props> {
           })
           .catch(error => {
             console.error(error);
+            this.state.message = error;
           });
       } else {
         console.log("no cookie");
       }
     } catch (error) {
-      // Error retrieving data
+      console.error(error);
     }
   };
 
@@ -86,7 +87,7 @@ class LoginScreen extends React.Component<Props> {
       "password": state.password,
       "url": SERVER_URL,
       "stayLoggedIn": true
-    }
+    };
     const body = JSON.stringify(opts);
     fetch(SERVER_URL + "/rest/account/localLogin", {
       method: "POST",
@@ -102,10 +103,10 @@ class LoginScreen extends React.Component<Props> {
       .then(async obj => {
         const { responseJson, response } = obj;
         if (responseJson.operationSuccessful) {
-          console.log(response);
           // TODO: WARNING We should not save an unhashed password in the final app
           await AsyncStorage.setItem("password", body);
           this.props.navigation.navigate("App");
+          console.log('nav hit')
         } else {
           this.setState({message: responseJson.message})
         }

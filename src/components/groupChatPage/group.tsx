@@ -3,6 +3,7 @@ import { Platform, KeyboardAvoidingView, StyleSheet } from "react-native";
 import { GiftedChat } from "react-native-gifted-chat";
 import SlackMessage from "./message";
 import { SERVER_URL } from 'react-native-dotenv';
+import MessageComponent from "../messageComponent";
 
 interface User {
   _id: any;
@@ -26,22 +27,29 @@ interface BlogPost {
 }
 
 class Group extends Component {
-  state: { messages: Message[] } = {
+  state: { message: any, messages: Message[] } = {
+    message: null,
     messages: []
   };
 
   componentWillMount() {
-    const groupChatUrl = SERVER_URL + "/rest/blog/query"
+    const groupChatUrl = SERVER_URL + "/rest/blog/query";
 
-    fetch(groupChatUrl, {method:"GET"})
+    fetch(groupChatUrl, {method:"GET", credentials: "include"})
       .then((response) => response.json())
       .then((response) => {
-        this.setState({
-        messages: response.data.map(data =>
-          data.blogEntries.map(this.transform).flat()
-          ).flat().map((message, i) => {return {...message, _id: i}})
-        });
-      })
+        if (response.operationSuccessful) {
+          this.setState({
+            messages: response.data.map(data =>
+                data.blogEntries.map(this.transform).flat()
+            ).flat().map((message, i) => {return {...message, _id: i}})
+          });
+        } else {
+          this.setState({message: response.message});
+        }
+      }).catch((error) => {
+        console.error(error);
+    });
   }
   transform(blogPost: BlogPost, i): Message {
     function getDate(strDate): Date {
@@ -71,17 +79,20 @@ class Group extends Component {
 
   render() {
     return (
-      <GiftedChat
-        messages={this.state.messages}
-        // onSend={messages => this.onSend(messages)}
-        renderMessage={this.renderMessage}
-        user={{
-          _id: "Kadin"
-        }}
-        {
-          ...Platform.OS === 'android' && <KeyboardAvoidingView behavior="padding" />
-       }
-      />
+        <>
+          <MessageComponent message={this.state.message}/>
+          <GiftedChat
+            messages={this.state.messages}
+            // onSend={messages => this.onSend(messages)}
+            renderMessage={this.renderMessage}
+            user={{
+              _id: "Kadin"
+            }}
+            {
+              ...Platform.OS === 'android' && <KeyboardAvoidingView behavior="padding" />
+           }
+          />
+        </>
       // }
       // )
     );
