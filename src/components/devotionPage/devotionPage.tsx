@@ -2,12 +2,17 @@ import React from "react";
 import {
   StyleSheet,
   SafeAreaView,
+  ActivityIndicator,
 } from "react-native";
 import { NavigationStackOptions } from "react-navigation-stack";
 import { ScrollView } from "react-native-gesture-handler";
 import LessonComponent from "./lesson/lessonComponent";
 import Lesson from "../../types/lesson";
 import { SERVER_URL } from 'react-native-dotenv';
+interface DevotionScreenState {
+    lessons: Lesson[],
+    isLoading: boolean,
+}
 class DevotionScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -15,7 +20,8 @@ class DevotionScreen extends React.Component {
   static navigationOptions: NavigationStackOptions = {
     title: "Devotions",
   };
-  state: { lessons: Lesson[] }= {
+  state: DevotionScreenState = {
+    isLoading: false,
     lessons: [{
       title: "",
       accountabilityLesson: false,
@@ -26,9 +32,9 @@ class DevotionScreen extends React.Component {
     }],
   }
   componentDidMount = () => {
-    // TODO make into service
     const loggedInUrl = `${SERVER_URL}/rest/devotion/today`;
     // ?anticache=" + (new Date()).toString();
+    this.setState({isLoading: true});
     fetch(loggedInUrl, {
       credentials: 'include',
       method:"GET",
@@ -40,7 +46,7 @@ class DevotionScreen extends React.Component {
       .then(response => {
         if(response.data && response.data.studyLessons) {
           const lessons: Lesson[] = response.data.studyLessons
-          this.setState({lessons});
+          this.setState({lessons, isLoading: false});
         } else {console.log(response)}
       })
       .catch(error => {
@@ -53,6 +59,7 @@ class DevotionScreen extends React.Component {
       <SafeAreaView style={styles.container}>
         <ScrollView>
           { this.state.lessons.map((lesson, i) => <LessonComponent key={i} lesson={lesson} />) }
+          <ActivityIndicator animating={this.state.isLoading} size="large" color="#0000ff" />
         </ScrollView>
       </SafeAreaView>
     )
