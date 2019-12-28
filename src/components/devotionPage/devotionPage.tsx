@@ -64,7 +64,7 @@ class DevotionScreen extends React.Component {
         <MessageComponent message={this.state.message}/>
         <ScrollView>
           { this.state.lessons.map((lesson, i) => <LessonComponent key={i} lesson={lesson} />) }
-          <ActivityIndicator animating={this.state.isLoading} size="large" color="#0000ff" />
+          <ActivityIndicator style={styles.spinner} animating={this.state.isLoading} size="large" color="#0000ff" />
         </ScrollView>
       </SafeAreaView>
     )
@@ -77,4 +77,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flex: 1
   },
+  spinner: {
+    padding: 16
+  }
 });
