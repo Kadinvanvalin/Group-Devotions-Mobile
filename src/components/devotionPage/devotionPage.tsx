@@ -10,7 +10,9 @@ import { ScrollView } from "react-native-gesture-handler";
 import LessonComponent from "./lesson/lessonComponent";
 import Lesson from "../../types/lesson";
 import { SERVER_URL } from 'react-native-dotenv';
+import MessageComponent from "../messageComponent";
 interface DevotionScreenState {
+    message: any,
     lessons: Lesson[],
     isLoading: boolean,
 }
@@ -19,6 +21,7 @@ class DevotionScreen extends React.Component {
     title: "Devotions",
   };
   state: DevotionScreenState = {
+    message: null,
     isLoading: false,
     lessons: [{
       title: "",
@@ -28,7 +31,7 @@ class DevotionScreen extends React.Component {
       studySections: [],
       copyright: "",
     }],
-  }
+  };
   componentDidMount = () => {
     const loggedInUrl = `${SERVER_URL}/rest/devotion/today?anticache=${(new Date()).toString()}`;
     this.setState({isLoading: true});
@@ -41,10 +44,12 @@ class DevotionScreen extends React.Component {
     })
       .then((response) => response.json())
       .then(response => {
-        if(response.data && response.data.studyLessons) {
-          const lessons: Lesson[] = response.data.studyLessons
+        if (response.operationSuccessful) {
+          const lessons: Lesson[] = response.data.studyLessons;
           this.setState({lessons, isLoading: false});
-        } else {console.log(response)}
+        } else {
+          this.setState({message: response.message});
+        }
       })
       .catch(error => {
         console.error(error);
@@ -54,9 +59,10 @@ class DevotionScreen extends React.Component {
   render() {
     return (
       <SafeAreaView style={styles.container}>
+        <MessageComponent message={this.state.message}/>
         <ScrollView>
           { this.state.lessons.map((lesson, i) => <LessonComponent action={this.action} index={i} key={i} lesson={lesson} />) }
-          <ActivityIndicator animating={this.state.isLoading} size="large" color="#0000ff" />
+          <ActivityIndicator style={styles.spinner} animating={this.state.isLoading} size="large" color="#0000ff" />
           <Button onPress={this.onSubmitPress} title="Submit" />
         </ScrollView>
       </SafeAreaView>
@@ -102,4 +108,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flex: 1
   },
+  spinner: {
+    padding: 16
+  }
 });
