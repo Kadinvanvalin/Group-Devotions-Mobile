@@ -1,15 +1,24 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Text, View, TouchableOpacity, StyleSheet } from 'react-native';
-
-export default class RadioButtons extends Component {
-	state = {
+interface State {
+	value: boolean;
+}
+interface Props {
+	action: Function;
+	options: any[];
+}
+export default class RadioButtons extends React.Component<Props, State> {
+	state: State = {
 		value: null,
 	};
-
+	action = (value) => {
+		
+		console.log("RadioButtons", this)
+    this.props.action(value)
+	};
 	render() {
 		const { options } = this.props;
 		const { value } = this.state;
-		console.log("PROPS", this.props)
 		return (
 			<View>
 				{options.map(item => {
@@ -22,6 +31,7 @@ export default class RadioButtons extends Component {
 									this.setState({
 										value: item.key,
 									});
+								this.action(item.key);
 								}}
 							>
 								{value === item.key && <View style={styles.checkedCircle} />}
@@ -39,7 +49,7 @@ const styles = StyleSheet.create({
 		flexDirection: 'row',
 		justifyContent: 'space-between',
 		alignItems: 'center',
-		marginBottom: 30,
+		marginTop: 16,
 	},
 
 	circle: {

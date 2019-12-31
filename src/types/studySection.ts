@@ -4,4 +4,5 @@ export interface StudySection {
   creationTimestamp: string;
   rawHtml:           boolean;
   answers:           any[];
+  answer: string;
 }

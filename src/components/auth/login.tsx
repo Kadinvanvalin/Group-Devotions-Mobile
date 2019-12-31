@@ -52,6 +52,7 @@ class LoginScreen extends React.Component<Props> {
       if (body !== "null" && body !== null) {
         fetch(SERVER_URL + "/rest/account/localLogin", {
           method: "POST",
+          credentials: 'include',
           headers: {
             "Content-Type": "application/json"
           },

@@ -19,7 +19,7 @@ class LoadScriptureComponent extends React.Component<any> {
       <View style={styles.container}>
           { this.state.loadedScripture.chapter ?
             this.state.loadedScripture.chapter.map((chapter, i) => {
-              return <Text style={styles.text}>{chapter.verse_nr}) {chapter.verse}</Text>
+              return <Text key={i} style={styles.text}>{chapter.verse_nr}) {chapter.verse}</Text>
             })
           : <Text>Unable to find {this.props.children}</Text>
           }

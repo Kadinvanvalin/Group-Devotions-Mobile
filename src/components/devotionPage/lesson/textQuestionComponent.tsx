@@ -15,16 +15,20 @@ class TextQuestionComponent extends React.Component<any, any> {
      <View style={styles.container}>
        <Text style={styles.text}>{this.props.children}</Text>
        <TextInput 
-              style={{height: 45,width: "95%",borderColor: "gray",borderWidth: 2}}
+              style={{height: 45, width: "95%", borderColor: "gray", borderWidth: 2}}
               // Adding hint in TextInput using Placeholder option.
               placeholder=" Enter Your Answer"          
               // Making the Under line Transparent.
               underlineColorAndroid="transparent"
               // Making the Text Input Text Hidden.
+              onChangeText={this.action}
        />
     </View>
     );
   }
+  action = (value: string) => {
+    this.props.action(value, this.props.index)
+  };
 }
 const styles = StyleSheet.create ({
   container: {

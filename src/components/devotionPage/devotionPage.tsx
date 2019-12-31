@@ -3,6 +3,7 @@ import {
   StyleSheet,
   SafeAreaView,
   ActivityIndicator,
+  Button,
 } from "react-native";
 import { NavigationStackOptions } from "react-navigation-stack";
 import { ScrollView } from "react-native-gesture-handler";
@@ -14,9 +15,6 @@ interface DevotionScreenState {
     isLoading: boolean,
 }
 class DevotionScreen extends React.Component {
-  constructor(props) {
-    super(props);
-  }
   static navigationOptions: NavigationStackOptions = {
     title: "Devotions",
   };
@@ -57,11 +55,44 @@ class DevotionScreen extends React.Component {
     return (
       <SafeAreaView style={styles.container}>
         <ScrollView>
-          { this.state.lessons.map((lesson, i) => <LessonComponent key={i} lesson={lesson} />) }
+          { this.state.lessons.map((lesson, i) => <LessonComponent action={this.action} index={i} key={i} lesson={lesson} />) }
           <ActivityIndicator animating={this.state.isLoading} size="large" color="#0000ff" />
+          <Button onPress={this.onSubmitPress} title="Submit" />
         </ScrollView>
       </SafeAreaView>
     )
+  }
+
+
+  action = (value: string, studySectionIndex: number, lessonsIndex: number) => {
+    const lessons: Lesson[] = [...this.state.lessons];
+    lessons[lessonsIndex].studySections[studySectionIndex].answer = value;
+    this.setState({lessons});
+  };
+
+  onSubmitPress = () => {
+    const loggedInUrl = `${SERVER_URL}/rest/devotion/?anticache=`;
+    this.setState({isLoading: true});
+    fetch(loggedInUrl, {
+      credentials: 'include',
+      method:"POST",
+      body:  JSON.stringify(this.state.lessons),
+      headers: {
+        'Content-Type': 'application/json'
+        },
+    })
+      .then((response) => response.json())
+      .then(response => {
+        console.log(response);
+        // TODO
+        // if(response.data && response.data.studyLessons) {
+        //   const lessons: Lesson[] = response.data.studyLessons
+        //   this.setState({lessons, isLoading: false});
+        // } else {console.log(response)}
+      })
+      .catch(error => {
+        console.error(error);
+      });
   }
 }
 export default DevotionScreen;

@@ -9,11 +9,11 @@ class YesNoQuestionComponent extends React.Component<any, any> {
   
  options = [
 	{
-		key: 'TODO: Check actual value yes',
+		key: 'Y',
 		text: 'Yes',
 	},
 	{
-		key: 'TODO: Check actual value no',
+		key: 'N',
 		text: 'No',
 	},
 ];
@@ -21,9 +21,12 @@ class YesNoQuestionComponent extends React.Component<any, any> {
     return (
      <View style={styles.container}>
        <Text style={styles.text}>{this.props.children}</Text>
-       <RadioButton options={this.options} />
+       <RadioButton action={this.action} options={this.options} />
     </View>
     );
+  }
+  action = (value: string) => {
+    this.props.action(value, this.props.index)
   }
 }
 const styles = StyleSheet.create ({
