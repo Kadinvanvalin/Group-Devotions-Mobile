@@ -82,7 +82,7 @@ class DevotionScreen extends React.Component {
     fetch(loggedInUrl, {
       credentials: 'include',
       method:"POST",
-      body:  JSON.stringify(this.state.lessons),
+      body:  "{ studyLessons: " + JSON.stringify(this.state.lessons) + " }",
       headers: {
         'Content-Type': 'application/json'
         },
